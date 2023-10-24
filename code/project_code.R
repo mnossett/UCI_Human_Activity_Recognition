@@ -47,11 +47,12 @@ combined_df$activity = factor(combined_df$activity, levels=activities[[1]],
 
 
 ## EXTRACT "subject", "activity", and mean and standard deviation columns for each measurement
-subset_df = select(combined_df, matches("mean.*|std.*"))
+subset_df = select(combined_df, "subject", "activity", matches("mean.*|std.*"))
 
 
-
-
+## PARSE subset_df TO FIND AVERAGE OF EACH VARIABLE FOR EACH SUBJECT AND ACTIVITY
+library(dplyr)
+parsed_df = subset_df %>% group_by(subject, activity) %>% summarise(across(everything(), mean))
 
 
 
